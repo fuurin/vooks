@@ -14,17 +14,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.views import login, logout
 from django.urls import path
 from django.conf import settings
 from django.conf.urls import include, url
-from . import views
+from vooks.views import *
+from vooks.forms import LoginForm
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('regist/', views.regist, name='regist'),
-    path('regist_save/', views.regist_save, name='regist_save'),
-    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'vooks/login.html', 'authentication_form': LoginForm})
-    # path('login/', views.LoginView.as_view())
+    url(r'^$', index, name='index'),
+    path('mypage/', mypage, name='mypage'),
+
+    path('regist/', regist, name='regist'),
+    path('regist_save/', regist_save, name='regist_save'),
+    
+    url(r'^login/$', login, {
+        'template_name': 'login.html', 
+        'authentication_form': LoginForm
+        }, name='login'),
+    
+    url(r'^logout/$', logout, {
+        'template_name': 'index.html'
+        }, name='logout'),
 ]
 
 if settings.DEBUG:
