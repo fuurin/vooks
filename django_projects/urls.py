@@ -17,11 +17,14 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls import include, url
-from vooks.views import LoginView
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', LoginView.as_view())
+    path('regist/', views.regist, name='regist'),
+    path('regist_save/', views.regist_save, name='regist_save'),
+    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'vooks/login.html', 'authentication_form': LoginForm})
+    # path('login/', views.LoginView.as_view())
 ]
 
 if settings.DEBUG:
